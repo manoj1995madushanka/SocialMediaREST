@@ -10,6 +10,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.Tute.Tutorial.Model.Message;
@@ -27,10 +28,18 @@ public class MessageResource {
 	 * "get message works"; }
 	 */
 	
+	
+	// message?year=2015
+	// message?start=2015&end=2
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Message> getMessage() {
-		
+	public List<Message> getMessage(@QueryParam("year") int year, @QueryParam("start") int start, @QueryParam("end") int end) {
+		if(year>0) {
+			ms.getAllMessagesForYear(year);
+		}
+		if(start>0 && end>0) {
+			ms.getAllMessagesPaginated(start, end);
+		}
 		return ms.getAllMessages();
 		
 	}
